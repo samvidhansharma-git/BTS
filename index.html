@@ -126,6 +126,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;justify-content:space-between
 @keyframes slideIn{to{opacity:1;transform:translateY(0)}}
 .m-card:hover{transform:translateY(-8px) scale(1.02);border-color:rgba(167,139,250,.45);box-shadow:0 20px 50px rgba(124,58,237,.25)}
 .m-photo-wrap{position:relative;height:320px;overflow:hidden}
+.m-photo-wrap.img-fallback::before{content:attr(data-emoji);font-size:5.5rem;display:flex;align-items:center;justify-content:center;height:100%;position:absolute;inset:0}
 .m-photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .5s ease;display:block}
 .m-card:hover .m-photo-wrap img{transform:scale(1.06)}
 .m-photo-gradient{position:absolute;inset:0;background:linear-gradient(to top,#0d0020 0%,rgba(13,0,32,.6) 45%,transparent 75%)}
@@ -260,7 +261,7 @@ footer{padding:3rem 2rem;text-align:center;border-top:1px solid rgba(167,139,250
   <div class="oa-content" id="oaContent">
     <div class="oa-ring"></div>
     <div class="oa-logo" id="oaLogo">방탄소년단</div>
-    <span class="oa-for" id="oaFor">A secret website for </span>
+    <span class="oa-for" id="oaFor">A love letter for</span>
     <span class="oa-name" id="oaName">Satya 💜</span>
     <div class="oa-hearts" id="oaHearts">💜 ⭐ 💜 ✨ 💜</div>
     <div class="oa-loading" id="oaLoading">
@@ -599,22 +600,22 @@ var members=[
    quote:'Rather than being afraid of failure, be afraid of not trying'},
   {hangul:'정호석',name:'j-hope',real:'Jung Ho-seok',num:'04',
    tags:['Rapper','Dancer','Hope of BTS'],
-   photo:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/J-Hope_at_Lollapalooza_2022_%28cropped%29.jpg/640px-J-Hope_at_Lollapalooza_2022_%28cropped%29.jpg',
+   photo:'https://kpopbeen.com/wp-content/uploads/2026/01/J-Hope-%E2%80%93-Main-Dance-Sub-Rapper.jpeg',
    bg:'linear-gradient(135deg,#302000,#805000)',emoji:'☀️',
    quote:'I\'m your hope, you\'re my hope, I\'m J-Hope'},
   {hangul:'박지민',name:'Jimin',real:'Park Ji-min',num:'05',
    tags:['Vocalist','Dancer','Main Performer'],
-   photo:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Jimin_BTS_on_the_set_of_MIC_Drop_Steve_Aoki_Remix_%28cropped%29.jpg/640px-Jimin_BTS_on_the_set_of_MIC_Drop_Steve_Aoki_Remix_%28cropped%29.jpg',
+   photo:'https://kpopbeen.com/wp-content/uploads/2026/01/Jimin-%E2%80%93-Vocalist-Main-Dancer.jpeg',
    bg:'linear-gradient(135deg,#200535,#5c1080)',emoji:'🌠',
    quote:'Live in a way that you\'ll never regret'},
   {hangul:'김태형',name:'V',real:'Kim Tae-hyung',num:'06',
    tags:['Vocalist','Visual','Taehyung'],
-   photo:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/V_BTS_Vogue_2019.jpg/640px-V_BTS_Vogue_2019.jpg',
+   photo:'https://kpopbeen.com/wp-content/uploads/2026/01/V-%E2%80%93-Lead-Dancer-Sub-Vocalist.jpeg',
    bg:'linear-gradient(135deg,#0a2535,#185070)',emoji:'🎨',
    quote:'I purple you — I will love you until the very end'},
   {hangul:'전정국',name:'Jungkook',real:'Jeon Jeong-guk',num:'07',
    tags:['Main Vocalist','Golden Maknae','Dancer'],
-   photo:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Jungkook_at_Weverse_Con_Festival_%28cropped%29.jpg/640px-Jungkook_at_Weverse_Con_Festival_%28cropped%29.jpg',
+   photo:'https://kpopbeen.com/wp-content/uploads/2026/01/Jungkook-%E2%80%93-Main-Vocalist-Golden-Maknae.jpeg',
    bg:'linear-gradient(135deg,#0a2010,#1a5530)',emoji:'🐇',
    quote:'I want to show you a cooler side of myself'}
 ];
@@ -625,22 +626,30 @@ function buildMembers(){
     var c=document.createElement('div');
     c.className='m-card';
     c.style.animationDelay=(i*.09)+'s';
+
+    var wrap=document.createElement('div');
+    wrap.className='m-photo-wrap';
+    wrap.style.background=m.bg;
+    wrap.setAttribute('data-emoji',m.emoji);
+
+    var img=document.createElement('img');
+    img.src=m.photo;
+    img.alt=m.name;
+    img.loading='lazy';
+    img.setAttribute('referrerpolicy','no-referrer');
+    img.onerror=function(){this.parentNode.classList.add('img-fallback');this.remove();};
+
+    var grad=document.createElement('div');grad.className='m-photo-gradient';
+    var num=document.createElement('div');num.className='m-photo-num';num.textContent=m.num;
+    var tag=document.createElement('span');tag.className='m-photo-tag';tag.textContent=m.tags[0];
+    wrap.appendChild(img);wrap.appendChild(grad);wrap.appendChild(num);wrap.appendChild(tag);
+
+    var body=document.createElement('div');
+    body.className='m-body';
     var rolesHtml=m.tags.map(function(t){return'<span class="m-tag">'+t+'</span>';}).join('');
-    c.innerHTML=
-      '<div class="m-photo-wrap" style="background:'+m.bg+'">'+
-        '<img src="'+m.photo+'" alt="'+m.name+'" loading="lazy" onerror="this.style.display=\'none\'">'+
-        '<div class="m-photo-gradient"></div>'+
-        '<div class="m-photo-num">'+m.num+'</div>'+
-        '<span class="m-photo-tag">'+m.tags[0]+'</span>'+
-      '</div>'+
-      '<div class="m-body">'+
-        '<p class="m-hangul">'+m.hangul+'</p>'+
-        '<h3 class="m-name">'+m.name+'</h3>'+
-        '<p class="m-real">'+m.real+'</p>'+
-        '<div class="m-tags">'+rolesHtml+'</div>'+
-        '<p class="m-quote">'+m.quote+'</p>'+
-      '</div>';
-    mg.appendChild(c);
+    body.innerHTML='<p class="m-hangul">'+m.hangul+'</p><h3 class="m-name">'+m.name+'</h3><p class="m-real">'+m.real+'</p><div class="m-tags">'+rolesHtml+'</div><p class="m-quote">'+m.quote+'</p>';
+
+    c.appendChild(wrap);c.appendChild(body);mg.appendChild(c);
   });
 }
 
