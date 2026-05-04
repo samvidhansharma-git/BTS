@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💜 BTS — For My Best Friend</title>
+<title>💜 BTS — For Satya, My Best Friend</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@100;300;400;600&display=swap');
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -37,19 +37,37 @@ nav{position:sticky;top:0;z-index:200;display:flex;justify-content:space-between
 @keyframes hbeat{0%,100%{transform:scale(1)}40%{transform:scale(1.25)}60%{transform:scale(1.1)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 
-/* LYRIC TYPEWRITER */
-#lyric-bar{padding:2.5rem 2rem;text-align:center;background:rgba(59,7,100,.18);border-top:1px solid rgba(167,139,250,.1);border-bottom:1px solid rgba(167,139,250,.1)}
-.lyric-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.1rem,3vw,1.8rem);color:#c4b5fd;min-height:2.5rem;letter-spacing:.04em}
-.lyric-cursor{display:inline-block;width:2px;height:1.2em;background:#a78bfa;vertical-align:middle;animation:blink .7s step-end infinite;margin-left:2px}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-.lyric-song{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:#f59e0b;margin-top:.5rem}
+/* CLOSING ANIMATION */
+#closing-overlay{position:fixed;inset:0;z-index:9999;background:#0a0018;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;pointer-events:none;opacity:0;transition:opacity .6s ease}
+#closing-overlay.active{pointer-events:all;opacity:1}
+.cl-stars{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.cl-star{position:absolute;border-radius:50%;background:white;animation:twinkle var(--dur,3s) ease-in-out infinite var(--del,0s)}
+.cl-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,.3),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);animation:gpulse 3s ease-in-out infinite}
+.cl-content{position:relative;z-index:2}
+.cl-from,.cl-name,.cl-heart,.cl-msg,.cl-sub,.cl-close{opacity:0;animation:none}
+.cl-content.run .cl-from{animation:fadeUp .8s .2s ease forwards}
+.cl-content.run .cl-name{animation:fadeUp .9s .5s ease forwards}
+.cl-content.run .cl-heart{animation:fadeUp .8s .9s ease forwards}
+.cl-content.run .cl-msg{animation:fadeUp .9s 1.2s ease forwards}
+.cl-content.run .cl-sub{animation:fadeUp .8s 1.8s ease forwards}
+.cl-content.run .cl-close{animation:fadeUp .8s 2.4s ease forwards}
+.cl-from{font-size:.6rem;letter-spacing:.5em;text-transform:uppercase;color:#f59e0b;margin-bottom:1rem;display:block}
+.cl-name{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3.5rem,12vw,7rem);line-height:1;color:#a78bfa;display:block}
+.cl-heart{font-size:clamp(3rem,8vw,5rem);display:block;margin:.6rem 0}
+.cl-msg{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,3vw,1.5rem);color:#c4b5fd;max-width:520px;line-height:1.9;display:block}
+.cl-sub{font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:rgba(167,139,250,.5);margin-top:2.5rem;display:block}
+.cl-close{margin-top:2rem;background:none;border:1px solid rgba(167,139,250,.3);color:#a78bfa;padding:.7rem 2rem;border-radius:100px;cursor:pointer;font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;font-family:'Josefin Sans',sans-serif;transition:background .25s,color .25s,transform .2s;display:inline-block}
+.cl-close:hover{background:rgba(124,58,237,.3);color:#fff;transform:scale(1.05)}
+.cl-petals{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.cl-petal{position:absolute;font-size:1.2rem;animation:petal-rain linear infinite;opacity:0}
+@keyframes petal-rain{0%{opacity:0;transform:translateY(-30px) rotate(0deg)}10%{opacity:.7}90%{opacity:.4}100%{opacity:0;transform:translateY(100vh) rotate(360deg)}}
 
 /* BANNER */
 .banner{background:linear-gradient(135deg,rgba(59,7,100,.5),rgba(124,58,237,.15),rgba(59,7,100,.5));border-top:1px solid rgba(167,139,250,.18);border-bottom:1px solid rgba(167,139,250,.18);text-align:center;padding:4rem 2rem}
 .banner p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.1rem,2.5vw,1.6rem);color:#c4b5fd;line-height:1.9;max-width:680px;margin:0 auto}
 .banner .for-you{display:block;font-size:clamp(1.5rem,4vw,2.5rem);color:#f59e0b;margin-top:.6rem;font-style:normal;letter-spacing:.05em}
 
-/* SHARED SECTION */
+/* SHARED */
 .section-wrap{max-width:1100px;margin:0 auto;padding:6rem 2rem}
 .section-header{text-align:center;margin-bottom:3.5rem}
 .eyebrow{display:block;font-size:.58rem;letter-spacing:.5em;text-transform:uppercase;color:#f59e0b;margin-bottom:.7rem}
@@ -57,21 +75,36 @@ nav{position:sticky;top:0;z-index:200;display:flex;justify-content:space-between
 .sec-title em{color:#a78bfa;font-style:italic}
 .divider{width:60px;height:1px;background:linear-gradient(to right,transparent,#7c3aed,transparent);margin:1.2rem auto 0}
 
-/* MEMBERS */
-.members-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.4rem}
-.m-card{border-radius:14px;background:rgba(30,10,55,.6);border:1px solid rgba(167,139,250,.14);overflow:hidden;transition:transform .4s cubic-bezier(.34,1.56,.64,1),border-color .3s,box-shadow .3s;opacity:0;transform:translateY(36px)}
+/* ── MEMBER CARDS WITH PHOTOS ── */
+.members-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.6rem}
+
+/* Photo card */
+.m-card{border-radius:18px;overflow:hidden;position:relative;background:#0d0020;border:1px solid rgba(167,139,250,.15);transition:transform .4s cubic-bezier(.34,1.56,.64,1),border-color .3s,box-shadow .3s;opacity:0;transform:translateY(36px);cursor:pointer}
 .m-card.show{animation:slideIn .65s cubic-bezier(.34,1.56,.64,1) forwards}
 @keyframes slideIn{to{opacity:1;transform:translateY(0)}}
-.m-card:hover{transform:translateY(-7px) scale(1.02);border-color:rgba(167,139,250,.4);box-shadow:0 16px 40px rgba(124,58,237,.2)}
-.m-visual{height:200px;display:flex;align-items:center;justify-content:center;font-size:5rem;position:relative}
-.m-num{position:absolute;top:.8rem;right:1rem;font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:rgba(167,139,250,.1);line-height:1}
-.m-body{padding:1.2rem 1.4rem 1.5rem}
-.m-hangul{font-size:.85rem;letter-spacing:.1em;color:#a78bfa}
-.m-name{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:300;margin:.15rem 0 .05rem}
+.m-card:hover{transform:translateY(-8px) scale(1.02);border-color:rgba(167,139,250,.45);box-shadow:0 20px 50px rgba(124,58,237,.25)}
+
+/* Image variant */
+.m-photo-wrap{position:relative;height:320px;overflow:hidden}
+.m-photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .5s ease;display:block}
+.m-card:hover .m-photo-wrap img{transform:scale(1.06)}
+.m-photo-gradient{position:absolute;inset:0;background:linear-gradient(to top,#0d0020 0%,rgba(13,0,32,.6) 45%,transparent 75%)}
+.m-photo-num{position:absolute;top:1rem;right:1rem;font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:300;color:rgba(255,255,255,.06);line-height:1;pointer-events:none}
+.m-photo-tag{position:absolute;top:1rem;left:1rem;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;padding:.25rem .6rem;border-radius:100px;border:1px solid rgba(167,139,250,.35);color:#c4b5fd;background:rgba(10,0,24,.7);backdrop-filter:blur(8px)}
+
+/* Emoji / gradient variant */
+.m-emoji-wrap{position:relative;height:220px;display:flex;align-items:center;justify-content:center;font-size:5.5rem}
+.m-emoji-num{position:absolute;top:.8rem;right:1rem;font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:rgba(167,139,250,.08);line-height:1}
+.m-emoji-tag{position:absolute;top:1rem;left:1rem;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;padding:.25rem .6rem;border-radius:100px;border:1px solid rgba(167,139,250,.25);color:#c4b5fd;background:rgba(10,0,24,.5)}
+
+/* Shared body */
+.m-body{padding:1.3rem 1.5rem 1.7rem}
+.m-hangul{font-size:.88rem;letter-spacing:.12em;color:#a78bfa}
+.m-name{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;margin:.15rem 0 .05rem;color:#f5eeff}
 .m-real{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:#f59e0b}
 .m-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.7rem}
-.m-tag{font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;padding:.25rem .55rem;border-radius:100px;border:1px solid rgba(167,139,250,.25);color:#c4b5fd}
-.m-quote{margin-top:.9rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.88rem;color:rgba(245,238,255,.52);line-height:1.6;border-left:2px solid #7c3aed;padding-left:.75rem}
+.m-tag{font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;padding:.25rem .55rem;border-radius:100px;border:1px solid rgba(167,139,250,.22);color:#c4b5fd}
+.m-quote{margin-top:.9rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:rgba(245,238,255,.5);line-height:1.7;border-left:2px solid #7c3aed;padding-left:.8rem}
 
 /* HEART CLICKER */
 #heart-section{padding:5rem 2rem;text-align:center;background:radial-gradient(ellipse 60% 40% at 50% 50%,rgba(124,58,237,.15),transparent)}
@@ -82,6 +115,17 @@ nav{position:sticky;top:0;z-index:200;display:flex;justify-content:space-between
 .heart-label{font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:#f59e0b;display:block;margin-top:.2rem}
 .heart-pop{position:absolute;font-size:1.5rem;pointer-events:none;animation:pop-fly 1s ease forwards}
 @keyframes pop-fly{0%{opacity:1;transform:translate(-50%,-50%) scale(.8)}100%{opacity:0;transform:translate(-50%,-200%) scale(1.4)}}
+
+/* ARMY */
+#army{text-align:center;padding:6rem 2rem;position:relative;background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(59,7,100,.3),transparent)}
+.army-bg-word{font-family:'Cormorant Garamond',serif;font-size:min(22vw,180px);font-weight:300;color:rgba(124,58,237,.04);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;user-select:none}
+.stats-row{display:flex;justify-content:center;flex-wrap:wrap;gap:2rem 3.5rem;margin:3rem auto;max-width:700px;position:relative}
+.stat{text-align:center}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:#a78bfa;display:block}
+.stat-l{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:#f59e0b;display:block;margin-top:.2rem}
+.i-purple{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,7vw,5rem);margin:1.5rem 0;position:relative}
+.i-purple .word{color:#a78bfa}.i-purple .hrt{display:inline-block;animation:hbeat 1.4s ease-in-out infinite}
+.army-sub{font-size:.72rem;letter-spacing:.18em;color:rgba(167,139,250,.55);max-width:480px;margin:0 auto;line-height:2;position:relative}
 
 /* TIMELINE */
 #timeline{padding:6rem 2rem;position:relative}
@@ -104,7 +148,6 @@ nav{position:sticky;top:0;z-index:200;display:flex;justify-content:space-between
 .quiz-options{display:flex;flex-direction:column;gap:.7rem}
 .quiz-opt{background:rgba(59,7,100,.3);border:1px solid rgba(167,139,250,.2);border-radius:8px;padding:.9rem 1.2rem;cursor:pointer;font-size:.75rem;letter-spacing:.1em;color:#c4b5fd;transition:background .25s,border-color .25s,transform .2s;text-align:left}
 .quiz-opt:hover{background:rgba(124,58,237,.25);border-color:rgba(167,139,250,.5);transform:translateX(4px)}
-.quiz-opt.selected{background:rgba(124,58,237,.4);border-color:#a78bfa}
 .quiz-progress{height:3px;background:rgba(167,139,250,.15);border-radius:3px;margin-bottom:1.5rem;overflow:hidden}
 .quiz-bar{height:100%;background:linear-gradient(to right,#7c3aed,#c4b5fd);border-radius:3px;transition:width .4s ease}
 .quiz-result{display:none;text-align:center;padding:1rem 0}
@@ -113,33 +156,6 @@ nav{position:sticky;top:0;z-index:200;display:flex;justify-content:space-between
 .result-why{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:rgba(245,238,255,.7);line-height:1.8;margin-top:1rem;max-width:400px;margin-left:auto;margin-right:auto}
 .quiz-retry{margin-top:1.5rem;background:none;border:1px solid rgba(167,139,250,.3);color:#a78bfa;padding:.6rem 1.5rem;border-radius:100px;cursor:pointer;font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;transition:background .25s,color .25s}
 .quiz-retry:hover{background:rgba(124,58,237,.3);color:#fff}
-
-/* ARMY SECTION */
-#army{text-align:center;padding:6rem 2rem;position:relative;background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(59,7,100,.3),transparent)}
-.army-bg-word{font-family:'Cormorant Garamond',serif;font-size:min(22vw,180px);font-weight:300;color:rgba(124,58,237,.04);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;user-select:none}
-.stats-row{display:flex;justify-content:center;flex-wrap:wrap;gap:2rem 3.5rem;margin:3rem auto;max-width:700px;position:relative}
-.stat{text-align:center}
-.stat-n{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:#a78bfa;display:block}
-.stat-l{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:#f59e0b;display:block;margin-top:.2rem}
-.i-purple{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,7vw,5rem);margin:1.5rem 0;position:relative}
-.i-purple .word{color:#a78bfa}.i-purple .hrt{display:inline-block;animation:hbeat 1.4s ease-in-out infinite}
-.army-sub{font-size:.72rem;letter-spacing:.18em;color:rgba(167,139,250,.55);max-width:480px;margin:0 auto;line-height:2;position:relative}
-
-/* ALBUMS */
-#albums{background:rgba(10,0,24,.4)}
-.albums-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:1.2rem}
-.a-card{border-radius:12px;overflow:hidden;aspect-ratio:1;position:relative;cursor:pointer;transition:transform .3s ease,box-shadow .3s;opacity:0;transform:scale(.88)}
-.a-card.show{animation:popIn .45s ease forwards}
-@keyframes popIn{to{opacity:1;transform:scale(1)}}
-.a-card:hover{transform:scale(1.06) rotate(-1.5deg);box-shadow:0 12px 30px rgba(0,0,0,.5)}
-.a-face{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.2rem;text-align:center}
-.a-emoji{font-size:2.6rem;margin-bottom:.7rem}
-.a-name{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;color:#fff;line-height:1.3}
-.a-year{font-size:.58rem;letter-spacing:.2em;color:rgba(255,255,255,.5);margin-top:.3rem}
-.a-hover{position:absolute;inset:0;background:rgba(10,0,24,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem;opacity:0;transition:opacity .3s}
-.a-card:hover .a-hover{opacity:1}
-.a-play{font-size:1.8rem;margin-bottom:.4rem}
-.a-track{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.85rem;color:#c4b5fd;text-align:center}
 
 /* QUOTES */
 #quotes{background:linear-gradient(180deg,rgba(59,7,100,.25) 0%,transparent 50%,rgba(59,7,100,.25) 100%);border-top:1px solid rgba(167,139,250,.1);border-bottom:1px solid rgba(167,139,250,.1)}
@@ -152,7 +168,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;justify-content:space-between
 .q-who{margin-top:1rem;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:#f59e0b;display:flex;align-items:center;gap:.5rem}
 .q-who::before{content:'';display:inline-block;width:18px;height:1px;background:#f59e0b}
 
-/* FUN FACTS */
+/* FACTS */
 #facts{padding:6rem 2rem;background:rgba(10,0,24,.3)}
 .facts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem;max-width:1000px;margin:0 auto}
 .fact-card{padding:1.8rem;border-radius:12px;background:rgba(30,10,55,.5);border:1px solid rgba(167,139,250,.12);text-align:center;opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s,border-color .3s}
@@ -176,23 +192,42 @@ footer{padding:3rem 2rem;text-align:center;border-top:1px solid rgba(167,139,250
 .f-logo{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:#c4b5fd;letter-spacing:.2em}
 .f-sub{font-size:.6rem;letter-spacing:.3em;color:rgba(167,139,250,.35);text-transform:uppercase;margin-top:.3rem}
 .f-hearts{margin-top:1.2rem;font-size:1.1rem;letter-spacing:.3rem}
+
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
 .reveal.show{opacity:1;transform:translateY(0)}
 </style>
 </head>
 <body>
 
+<!-- CLOSING OVERLAY -->
+<div id="closing-overlay">
+  <div class="cl-stars" id="clStars"></div>
+  <div class="cl-glow"></div>
+  <div class="cl-petals" id="clPetals"></div>
+  <div class="cl-content" id="clContent">
+    <span class="cl-from">This entire universe was made for</span>
+    <span class="cl-name">Satya 💜</span>
+    <span class="cl-heart">✨💜✨</span>
+    <span class="cl-msg">
+      You are someone's whole universe — their reason to smile,<br>
+      their person through every era, every song, every breakdown and comeback.<br>
+      Just like BTS to ARMY — some things are simply meant to be. 💜
+    </span>
+    <span class="cl-sub">방탄소년단 · BTS · Forever &amp; Always</span>
+    <button class="cl-close" onclick="closeOutro()">Back to the Universe ✨</button>
+  </div>
+</div>
+
 <!-- NAV -->
 <nav>
-  <div class="nav-brand">BTS <span>💜</span> ARMY</div>
+  <div class="nav-brand">For <span>Satya</span> 💜 BTS</div>
   <ul class="nav-links">
     <li><a href="#members">Members</a></li>
     <li><a href="#army">ARMY</a></li>
     <li><a href="#timeline">Timeline</a></li>
-    <li><a href="#albums">Albums</a></li>
     <li><a href="#quiz">Quiz</a></li>
     <li><a href="#quotes">Quotes</a></li>
-    <li><a href="#letter">For You 💜</a></li>
+    <li><a href="#letter">For Satya 💜</a></li>
   </ul>
 </nav>
 
@@ -200,7 +235,7 @@ footer{padding:3rem 2rem;text-align:center;border-top:1px solid rgba(167,139,250
 <section id="hero">
   <div class="hero-glow"></div>
   <div class="star-bg" id="starBg"></div>
-  <p class="hero-eyebrow">A universe built just for you</p>
+  <p class="hero-eyebrow">A universe built just for Satya</p>
   <h1 class="hero-h1">
     <span class="h1-purple">방탄</span><span class="h1-gold">소년단</span><br>BTS
   </h1>
@@ -208,7 +243,7 @@ footer{padding:3rem 2rem;text-align:center;border-top:1px solid rgba(167,139,250
   <p class="hero-tagline">
     Seven stars. One constellation.<br>
     A fandom that shook the world.<br>
-    And a best friend who loves them with her whole heart. 💜
+    And <strong style="color:#c4b5fd;font-weight:400">Satya</strong> — who loves them with her whole heart. 💜
   </p>
   <div class="hero-hearts">
     <span class="beat">💜</span>
@@ -217,18 +252,12 @@ footer{padding:3rem 2rem;text-align:center;border-top:1px solid rgba(167,139,250
   </div>
 </section>
 
-<!-- LYRIC TYPEWRITER -->
-<div id="lyric-bar">
-  <div class="lyric-text" id="lyricText"><span class="lyric-cursor"></span></div>
-  <div class="lyric-song" id="lyricSong"></div>
-</div>
-
 <!-- BANNER -->
 <div class="banner reveal">
   <p>
-    This page was made with every ounce of love — for you, my dearest best friend.<br>
+    This page was made with every ounce of love — for you, <strong style="color:#f5eeff;font-style:normal">Satya</strong>.<br>
     Because you deserve a whole universe dedicated to what makes your heart sing.
-    <span class="for-you">✨ This one's for you ✨</span>
+    <span class="for-you">✨ This one's for you, Satya ✨</span>
   </p>
 </div>
 
@@ -256,7 +285,7 @@ footer{padding:3rem 2rem;text-align:center;border-top:1px solid rgba(167,139,250
     <span class="heart-count" id="heartCount">0</span>
     <span class="heart-label">Purple Hearts Sent</span>
   </div>
-  <p class="reveal" style="font-size:.7rem;letter-spacing:.2em;color:rgba(167,139,250,.5);margin-top:1.5rem">Tap the heart to send love to BTS &amp; your bestie 💜</p>
+  <p class="reveal" style="font-size:.7rem;letter-spacing:.2em;color:rgba(167,139,250,.5);margin-top:1.5rem">Tap the heart to send love to BTS &amp; <strong style="color:#c4b5fd;font-weight:400">Satya</strong> 💜</p>
 </section>
 
 <!-- ARMY -->
@@ -278,7 +307,8 @@ footer{padding:3rem 2rem;text-align:center;border-top:1px solid rgba(167,139,250
   </div>
   <p class="army-sub reveal">
     "I purple you" — V's iconic phrase that became the symbol of BTS's eternal bond with ARMY.
-    Purple means trusting and loving each other for a long, long time.
+    Purple means trusting and loving each other for a long, long time.<br>
+    <em style="color:#f59e0b">Satya, this one's for you.</em>
   </p>
 </section>
 
@@ -293,18 +323,6 @@ footer{padding:3rem 2rem;text-align:center;border-top:1px solid rgba(167,139,250
     <div class="timeline-inner">
       <div class="tl-track" id="tlTrack"></div>
     </div>
-  </div>
-</section>
-
-<!-- ALBUMS -->
-<section id="albums">
-  <div class="section-wrap">
-    <div class="section-header reveal">
-      <span class="eyebrow">Discography</span>
-      <h2 class="sec-title">The <em>Music</em></h2>
-      <div class="divider"></div>
-    </div>
-    <div class="albums-grid" id="albumsGrid"></div>
   </div>
 </section>
 
@@ -345,7 +363,7 @@ footer{padding:3rem 2rem;text-align:center;border-top:1px solid rgba(167,139,250
   </div>
 </section>
 
-<!-- FUN FACTS -->
+<!-- FACTS -->
 <section id="facts">
   <div class="section-header reveal">
     <span class="eyebrow">Did You Know?</span>
@@ -360,20 +378,20 @@ footer{padding:3rem 2rem;text-align:center;border-top:1px solid rgba(167,139,250
   <div class="letter-inner">
     <div class="section-header reveal">
       <span class="eyebrow">A Special Dedication</span>
-      <h2 class="sec-title">For My <em>Best Friend</em></h2>
+      <h2 class="sec-title">For <em>Satya</em></h2>
       <div class="divider"></div>
     </div>
     <div class="letter-box reveal">
       <p class="letter-label">✉ A note from the heart</p>
       <p class="letter-p">
-        Dear best friend,<br><br>
+        Dear Satya,<br><br>
         You light up every room the same way BTS lights up every stage.
         Your passion for their music, their stories, their message —
         it's one of the most beautiful things about you.<br><br>
         You've shown me that music can be a whole universe,
         that seven boys from Korea can make millions of hearts feel seen,
-        and that stanning BTS is basically a superpower.<br><br>
-        So here is your little galaxy — made just for you,
+        and that being an ARMY — and your friend — is basically a superpower.<br><br>
+        So here is your little galaxy, Satya — made just for you,
         because you deserve all the purple in the world. 💜
       </p>
       <p class="letter-sig">— Your Best Friend Forever 🌙</p>
@@ -383,9 +401,14 @@ footer{padding:3rem 2rem;text-align:center;border-top:1px solid rgba(167,139,250
 
 <!-- FOOTER -->
 <footer>
-  <div class="f-logo">BTS × ARMY</div>
-  <p class="f-sub">Forever &amp; Always · 방탄소년단</p>
+  <div class="f-logo">BTS × Satya × ARMY</div>
+  <p class="f-sub">Forever &amp; Always · 방탄소년단 · Made for Satya 💜</p>
   <div class="f-hearts">💜 💜 💜 💜 💜 💜 💜</div>
+  <div style="margin-top:2rem">
+    <button onclick="openOutro()" style="background:linear-gradient(135deg,#3b0764,#7c3aed);border:none;color:#f5eeff;padding:.9rem 2.5rem;border-radius:100px;cursor:pointer;font-family:'Josefin Sans',sans-serif;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;box-shadow:0 4px 20px rgba(124,58,237,.4);transition:transform .2s,box-shadow .3s" onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 8px 30px rgba(124,58,237,.6)'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 20px rgba(124,58,237,.4)'">
+      ✨ A message for Satya ✨
+    </button>
+  </div>
 </footer>
 
 <script>
@@ -394,57 +417,98 @@ footer{padding:3rem 2rem;text-align:center;border-top:1px solid rgba(167,139,250
   var bg=document.getElementById('starBg');
   if(!bg)return;
   for(var i=0;i<160;i++){
-    var s=document.createElement('div');
-    s.className='star';
+    var s=document.createElement('div');s.className='star';
     var sz=Math.random()*2+0.5;
     s.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+(Math.random()*100)+'%;top:'+(Math.random()*100)+'%;--dur:'+(2+Math.random()*4)+'s;--del:-'+(Math.random()*5)+'s';
     bg.appendChild(s);
   }
 })();
 
-// ── LYRIC TYPEWRITER ──
-var lyrics=[
-  {line:"No matter who you are, where you're from — speak yourself.",song:"RM — UN Speech"},
-  {line:"Life goes on, life goes on... like an arrow in the blue sky.",song:"BTS — Life Goes On"},
-  {line:"You've shown me I have reasons. I should love myself.",song:"BTS — Answer: Love Myself"},
-  {line:"Even if it's a little dangerous, let's live on recklessly.",song:"BTS — Run"},
-  {line:"Boy meets evil — but love will win in the end.",song:"BTS — Blood Sweat & Tears"},
-  {line:"I just wanna be a good man. Save me, save me.",song:"BTS — Save Me"},
-  {line:"Let me show you. 'Cause I, I, I got it.",song:"BTS — Butter"},
-  {line:"You're my best part. My best part.",song:"Jin — The Astronaut"},
-];
-var li=0,ci=0,deleting=false,lyricEl=document.getElementById('lyricText'),songEl=document.getElementById('lyricSong');
-function typeLyric(){
-  var cur=lyrics[li];
-  if(!deleting){
-    lyricEl.textContent=cur.line.slice(0,ci+1);
-    songEl.textContent=cur.song;
-    ci++;
-    if(ci>=cur.line.length){setTimeout(function(){deleting=true;typeLyric();},2500);return;}
-    setTimeout(typeLyric,45);
-  } else {
-    lyricEl.textContent=cur.line.slice(0,ci-1);
-    ci--;
-    if(ci<=0){deleting=false;li=(li+1)%lyrics.length;ci=0;setTimeout(typeLyric,400);return;}
-    setTimeout(typeLyric,18);
-  }
-}
-typeLyric();
+// ── CLOSING OVERLAY ──
+(function(){
+  var bg=document.getElementById('clStars');
+  if(bg){for(var i=0;i<120;i++){var s=document.createElement('div');s.className='cl-star';var sz=Math.random()*2+0.4;s.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+(Math.random()*100)+'%;top:'+(Math.random()*100)+'%;--dur:'+(2+Math.random()*4)+'s;--del:-'+(Math.random()*5)+'s';bg.appendChild(s);}}
+  var pw=document.getElementById('clPetals');
+  if(pw){var arr=['💜','⭐','✨','🌸','💜','✨'];for(var j=0;j<18;j++){var p=document.createElement('span');p.className='cl-petal';p.textContent=arr[Math.floor(Math.random()*arr.length)];p.style.left=(Math.random()*100)+'vw';p.style.fontSize=(0.8+Math.random()*.8)+'rem';p.style.animationDuration=(7+Math.random()*10)+'s';p.style.animationDelay=(Math.random()*8)+'s';pw.appendChild(p);}}
+})();
+function openOutro(){var ov=document.getElementById('closing-overlay'),ct=document.getElementById('clContent');ov.classList.add('active');document.body.style.overflow='hidden';setTimeout(function(){ct.classList.add('run');},100);}
+function closeOutro(){var ov=document.getElementById('closing-overlay'),ct=document.getElementById('clContent');ov.style.opacity='0';setTimeout(function(){ov.classList.remove('active');ov.style.opacity='';ct.classList.remove('run');document.body.style.overflow='';},600);}
 
-// ── MEMBERS ──
+// ── MEMBERS DATA ──
 var members=[
-  {hangul:'김남준',name:'RM',real:'Kim Nam-joon',num:'01',tags:['Leader','Rapper','Lyricist'],bg:'linear-gradient(135deg,#1a1040,#3b2080)',emoji:'🌊',quote:'"I\'m still learning how to be comfortable in my own skin."'},
-  {hangul:'김석진',name:'Jin',real:'Kim Seok-jin',num:'02',tags:['Vocalist','Worldwide Handsome'],bg:'linear-gradient(135deg,#401020,#801840)',emoji:'🌸',quote:'"You\'re beautiful just the way you are."'},
-  {hangul:'민윤기',name:'SUGA',real:'Min Yoon-gi',num:'03',tags:['Rapper','Producer','Agust D'],bg:'linear-gradient(135deg,#101035,#202870)',emoji:'🎹',quote:'"Rather than being afraid of failure, be afraid of not trying."'},
-  {hangul:'정호석',name:'j-hope',real:'Jung Ho-seok',num:'04',tags:['Rapper','Dancer','Hope of BTS'],bg:'linear-gradient(135deg,#302000,#805000)',emoji:'☀️',quote:'"I\'m your hope, you\'re my hope, I\'m J-Hope!"'},
-  {hangul:'박지민',name:'Jimin',real:'Park Ji-min',num:'05',tags:['Vocalist','Dancer','Main Performer'],bg:'linear-gradient(135deg,#200535,#5c1080)',emoji:'🌠',quote:'"Live in a way that you\'ll never regret."'},
-  {hangul:'김태형',name:'V',real:'Kim Tae-hyung',num:'06',tags:['Vocalist','Visual','Taehyung'],bg:'linear-gradient(135deg,#0a2535,#185070)',emoji:'🎨',quote:'"I purple you — I will love you until the very end."'},
-  {hangul:'전정국',name:'Jungkook',real:'Jeon Jeong-guk',num:'07',tags:['Main Vocalist','Golden Maknae','Dancer'],bg:'linear-gradient(135deg,#0a2010,#1a5530)',emoji:'🐇',quote:'"I want to show you a cooler side of myself."'}
+  {hangul:'김남준',name:'RM',real:'Kim Nam-joon',num:'01',
+   tags:['Leader','Rapper','Lyricist'],
+   photo:'https://kpopbeen.com/wp-content/uploads/2026/01/RM-%E2%80%94-Leader-Rapper-1024x722.jpeg',
+   bg:'linear-gradient(135deg,#1a1040,#3b2080)',emoji:'🌊',
+   quote:'"I\'m still learning how to be comfortable in my own skin."'},
+  {hangul:'김석진',name:'Jin',real:'Kim Seok-jin',num:'02',
+   tags:['Vocalist','Worldwide Handsome'],
+   photo:'https://kpopbeen.com/wp-content/uploads/2026/01/Jin-%E2%80%93-Vocalist-1024x677.jpeg',
+   bg:'linear-gradient(135deg,#401020,#801840)',emoji:'🌸',
+   quote:'"You\'re beautiful just the way you are."'},
+  {hangul:'민윤기',name:'SUGA',real:'Min Yoon-gi',num:'03',
+   tags:['Rapper','Producer','Agust D'],
+   photo:'https://kpopbeen.com/wp-content/uploads/2026/01/Suga-%E2%80%93-Lead-Rapper.jpeg',
+   bg:'linear-gradient(135deg,#101035,#202870)',emoji:'🎹',
+   quote:'"Rather than being afraid of failure, be afraid of not trying."'},
+  {hangul:'정호석',name:'j-hope',real:'Jung Ho-seok',num:'04',
+   tags:['Rapper','Dancer','Hope of BTS'],
+   photo:null,bg:'linear-gradient(135deg,#302000,#805000)',emoji:'☀️',
+   quote:'"I\'m your hope, you\'re my hope, I\'m J-Hope!"'},
+  {hangul:'박지민',name:'Jimin',real:'Park Ji-min',num:'05',
+   tags:['Vocalist','Dancer','Main Performer'],
+   photo:null,bg:'linear-gradient(135deg,#200535,#5c1080)',emoji:'🌠',
+   quote:'"Live in a way that you\'ll never regret."'},
+  {hangul:'김태형',name:'V',real:'Kim Tae-hyung',num:'06',
+   tags:['Vocalist','Visual','Taehyung'],
+   photo:null,bg:'linear-gradient(135deg,#0a2535,#185070)',emoji:'🎨',
+   quote:'"I purple you — I will love you until the very end."'},
+  {hangul:'전정국',name:'Jungkook',real:'Jeon Jeong-guk',num:'07',
+   tags:['Main Vocalist','Golden Maknae','Dancer'],
+   photo:null,bg:'linear-gradient(135deg,#0a2010,#1a5530)',emoji:'🐇',
+   quote:'"I want to show you a cooler side of myself."'}
 ];
+
 var mg=document.getElementById('membersGrid');
 members.forEach(function(m,i){
-  var c=document.createElement('div');c.className='m-card';c.style.animationDelay=(i*.09)+'s';
-  c.innerHTML='<div class="m-visual" style="background:'+m.bg+'"><span style="font-size:4.5rem">'+m.emoji+'</span><div class="m-num">'+m.num+'</div></div><div class="m-body"><p class="m-hangul">'+m.hangul+'</p><h3 class="m-name">'+m.name+'</h3><p class="m-real">'+m.real+'</p><div class="m-tags">'+m.tags.map(function(t){return'<span class="m-tag">'+t+'</span>';}).join('')+'</div><p class="m-quote">'+m.quote+'</p></div>';
+  var c=document.createElement('div');
+  c.className='m-card';
+  c.style.animationDelay=(i*.09)+'s';
+
+  var rolesHtml=m.tags.map(function(t){return'<span class="m-tag">'+t+'</span>';}).join('');
+
+  if(m.photo){
+    // Photo card
+    c.innerHTML=
+      '<div class="m-photo-wrap">'+
+        '<img src="'+m.photo+'" alt="'+m.name+'" loading="lazy" onerror="this.parentNode.style.background=\''+m.bg+'\';this.style.display=\'none\'">'+
+        '<div class="m-photo-gradient"></div>'+
+        '<div class="m-photo-num">'+m.num+'</div>'+
+        '<span class="m-photo-tag">'+m.tags[0]+'</span>'+
+      '</div>'+
+      '<div class="m-body">'+
+        '<p class="m-hangul">'+m.hangul+'</p>'+
+        '<h3 class="m-name">'+m.name+'</h3>'+
+        '<p class="m-real">'+m.real+'</p>'+
+        '<div class="m-tags">'+rolesHtml+'</div>'+
+        '<p class="m-quote">'+m.quote+'</p>'+
+      '</div>';
+  } else {
+    // Emoji gradient card
+    c.innerHTML=
+      '<div class="m-emoji-wrap" style="background:'+m.bg+'">'+
+        '<span style="font-size:5rem">'+m.emoji+'</span>'+
+        '<div class="m-emoji-num">'+m.num+'</div>'+
+        '<span class="m-emoji-tag">'+m.tags[0]+'</span>'+
+      '</div>'+
+      '<div class="m-body">'+
+        '<p class="m-hangul">'+m.hangul+'</p>'+
+        '<h3 class="m-name">'+m.name+'</h3>'+
+        '<p class="m-real">'+m.real+'</p>'+
+        '<div class="m-tags">'+rolesHtml+'</div>'+
+        '<p class="m-quote">'+m.quote+'</p>'+
+      '</div>';
+  }
   mg.appendChild(c);
 });
 
@@ -472,7 +536,8 @@ var events=[
   {year:'2020',event:'First English No.1 — Dynamite',detail:'"Dynamite" debuts at #1 on the Billboard Hot 100 — the first Korean act ever to do so.'},
   {year:'2021',event:'Permission to Dance at the UN',detail:'BTS performs live at the UN General Assembly — a historic first for any musical act.'},
   {year:'2022–2023',event:'Solo Era Begins',detail:'Members begin solo projects — RM\'s Indigo, Jimin\'s FACE, Suga\'s D-DAY, and more. Each one a masterpiece.'},
-  {year:'2025',event:'Reunion & "You"',detail:'All 7 members return from military service. BTS is back together, and ARMY\'s love never wavered for a single second.'}
+  {year:'2025',event:'All 7 Discharged',detail:'All seven members complete their mandatory military service by June 2025. ARMY waited — and never stopped loving.'},
+  {year:'March 2026',event:'"Arirang" — The Comeback',detail:'BTS returns with their album Arirang, debuting at #1 on Billboard 200. Their first #1 single "Swim" proves they never left.'}
 ];
 var tl=document.getElementById('tlTrack');
 events.forEach(function(e,i){
@@ -481,33 +546,15 @@ events.forEach(function(e,i){
   tl.appendChild(d);
 });
 
-// ── ALBUMS ──
-var albums=[
-  {name:'Dark &amp; Wild',year:'2014',emoji:'🌙',track:'"Just One Day"',bg:'linear-gradient(135deg,#1a0530,#3b0764)'},
-  {name:'HYYH Pt.2',year:'2015',emoji:'🌊',track:'"Run"',bg:'linear-gradient(135deg,#051530,#0a3a7a)'},
-  {name:'Wings',year:'2016',emoji:'🦋',track:'"Blood Sweat &amp; Tears"',bg:'linear-gradient(135deg,#200a30,#500a78)'},
-  {name:'Love Yourself: Her',year:'2017',emoji:'💜',track:'"DNA"',bg:'linear-gradient(135deg,#350a30,#7c1870)'},
-  {name:'Tear',year:'2018',emoji:'🌧️',track:'"Fake Love"',bg:'linear-gradient(135deg,#0a1040,#182878)'},
-  {name:'Map of the Soul: Persona',year:'2019',emoji:'🎭',track:'"Boy With Luv"',bg:'linear-gradient(135deg,#302000,#784800)'},
-  {name:'BE',year:'2020',emoji:'🌌',track:'"Life Goes On"',bg:'linear-gradient(135deg,#0a1530,#143878)'},
-  {name:'Proof',year:'2022',emoji:'✨',track:'"Yet To Come"',bg:'linear-gradient(135deg,#0a2510,#1a6230)'}
-];
-var ag=document.getElementById('albumsGrid');
-albums.forEach(function(a,i){
-  var c=document.createElement('div');c.className='a-card';c.style.animationDelay=(i*.07)+'s';
-  c.innerHTML='<div class="a-face" style="background:'+a.bg+'"><div class="a-emoji">'+a.emoji+'</div><div class="a-name">'+a.name+'</div><div class="a-year">'+a.year+'</div></div><div class="a-hover"><div class="a-play">▶</div><p class="a-track">Featured: '+a.track+'</p></div>';
-  ag.appendChild(c);
-});
-
 // ── QUIZ ──
 var quizData=[
   {q:"It's Friday night. You're...",opts:["Writing poems and reading art books","Dancing to a playlist alone in your room","Producing beats in your studio at 3am","Doing something spontaneous with friends","Journaling your deepest feelings","Exploring a gallery or museum","Working out and singing your heart out"]},
   {q:"Your friends would describe you as...",opts:["The deep thinker","The energetic one","The cool, mysterious one","The sunshine","The caring one","The artistic one","The talented one who's good at everything"]},
   {q:"Pick your ideal travel destination:",opts:["New Zealand — nature & philosophy","New York — energy & dance","Tokyo — music studios","Seoul — adventure","Paris — romance & art","Vienna — culture & beauty","Everywhere — I'm the Golden Maknae"]},
   {q:"Your go-to comfort thing is...",opts:["A thought-provoking book","Dancing until you feel better","Your favourite instrumental playlist","Calling your friends","A long journal entry","Painting or sketching","Watching old videos of yourself performing"]},
-  {q:"Your love language is...",opts:["Words of affirmation","Acts of service","Quality time","Words + all of them tbh","Touch — a warm hug","Gift-giving & thoughtful gestures","Words of affirmation & acts of service"]},
+  {q:"Your love language is...",opts:["Words of affirmation","Acts of service","Quality time","Words + all of them","Touch — a warm hug","Gift-giving & thoughtful gestures","Words of affirmation & acts of service"]},
   {q:"What's your spirit animal?",opts:["Namjoon's dimples","Seokjin's windshield wiper laugh","Yoongi's cat","Hobi's smile","Jimin's eye smile","Taehyung's boxy smile","Jungkook's bunny teeth"]},
-  {q:"Finally — your BTS era?",opts:["HYYH (growing up)","Butter (fun & pop)","Agust D (raw honesty)","Dynamite (joy & energy)","Love Yourself (self-love)","Mots: 7 (friendship & depth)","Proof (all of it)"]},
+  {q:"Finally — your BTS era?",opts:["HYYH (growing up)","Butter (fun & pop)","Agust D (raw honesty)","Dynamite (joy & energy)","Love Yourself (self-love)","Mots: 7 (friendship)","Proof (all of it)"]}
 ];
 var scores=[0,0,0,0,0,0,0];
 var results=[
@@ -517,13 +564,13 @@ var results=[
   {name:'j-hope',emoji:'☀️',why:'You are pure sunshine. Your energy is infectious, your passion is undeniable, and you make every space brighter just by being there.'},
   {name:'Jimin',emoji:'🌠',why:'Soft but strong, caring but fierce — you love with your whole heart and inspire everyone around you to do the same.'},
   {name:'V',emoji:'🎨',why:'Unique, artistic, and wonderfully yourself — you see the world differently and that\'s exactly what makes you extraordinary.'},
-  {name:'Jungkook',emoji:'🐇',why:'Talented, driven, and endlessly lovable — you\'re the golden maknae of your friend group. Everything you touch turns to magic.'},
+  {name:'Jungkook',emoji:'🐇',why:'Talented, driven, and endlessly lovable — you\'re the golden maknae of your friend group. Everything you touch turns to magic.'}
 ];
 var qIdx=0;
 function startQuiz(){
   scores=[0,0,0,0,0,0,0];qIdx=0;
   document.getElementById('quizResult').style.display='none';
-  document.getElementById('quizQ').parentElement.querySelectorAll('.quiz-num,.quiz-q,.quiz-options,.quiz-progress').forEach(function(e){e.style.display='';});
+  document.querySelectorAll('.quiz-num,.quiz-q,.quiz-options,.quiz-progress').forEach(function(e){e.style.display='';});
   showQ();
 }
 function showQ(){
@@ -534,10 +581,7 @@ function showQ(){
   var opts=document.getElementById('quizOpts');opts.innerHTML='';
   d.opts.forEach(function(o,i){
     var b=document.createElement('button');b.className='quiz-opt';b.textContent=o;
-    b.addEventListener('click',function(){
-      scores[i]++;qIdx++;
-      if(qIdx>=quizData.length){showResult();}else{showQ();}
-    });
+    b.addEventListener('click',function(){scores[i]++;qIdx++;if(qIdx>=quizData.length){showResult();}else{showQ();}});
     opts.appendChild(b);
   });
 }
@@ -547,14 +591,7 @@ function showResult(){
   var r=results[best];
   setTimeout(function(){
     document.getElementById('quizResult').style.display='block';
-    ['quiz-num','quiz-q','quiz-options','quiz-progress'].forEach(function(id){
-      var el=document.querySelector('.'+id)||document.getElementById(id);
-      if(el)el.style.display='none';
-    });
-    document.querySelector('.quiz-num').style.display='none';
-    document.querySelector('.quiz-q').style.display='none';
-    document.querySelector('.quiz-options').style.display='none';
-    document.querySelector('.quiz-progress').style.display='none';
+    document.querySelectorAll('.quiz-num,.quiz-q,.quiz-options,.quiz-progress').forEach(function(e){e.style.display='none';});
     document.getElementById('resEmoji').textContent=r.emoji;
     document.getElementById('resMember').textContent='You are '+r.name+'!';
     document.getElementById('resWhy').textContent=r.why;
@@ -569,7 +606,7 @@ var quotes=[
   {t:"Life is not about getting and having, it's about giving and being.",a:'RM'},
   {t:"Maybe I made a mistake yesterday, but yesterday's me is still me. Today I am who I am with all of my faults and mistakes.",a:'BTS — Answer: Love Myself'},
   {t:"When things get hard, stop for a while and look back to see how far you've come.",a:'Jimin'},
-  {t:"I'm not saying don't be afraid — be afraid, and do it anyway.",a:'Jungkook'},
+  {t:"I'm not saying don't be afraid — be afraid, and do it anyway.",a:'Jungkook'}
 ];
 var qg=document.getElementById('quotesGrid');
 quotes.forEach(function(q,i){
@@ -578,16 +615,16 @@ quotes.forEach(function(q,i){
   qg.appendChild(c);
 });
 
-// ── FUN FACTS ──
+// ── FACTS ──
 var facts=[
   {icon:'🏆',text:'BTS became the first K-pop group to top the Billboard Hot 100 with "Dynamite" in 2020 — a historic moment for all of Asia.'},
   {icon:'🎤',text:'RM is fluent in English — he learned it almost entirely from watching the TV show "Friends." King of self-education.'},
   {icon:'🌍',text:'BTS spoke at the United Nations General Assembly in 2018, 2021, and 2022 — an honor usually reserved for world leaders.'},
   {icon:'💜',text:'V invented "I Purple You" in 2016 as a way to say BTS trusts and loves ARMY for a long, long time. The phrase now belongs to the world.'},
-  {icon:'🎹',text:'SUGA produced music even when he was injured — he once played piano after shoulder surgery with one hand. Absolute dedication.'},
+  {icon:'🎹',text:'SUGA produced music even when injured — he once played piano after shoulder surgery with one hand. Absolute dedication.'},
   {icon:'🐇',text:'Jungkook was scouted by 7 different agencies at age 13 — he chose Big Hit because he wanted to be with RM. Best decision ever made.'},
   {icon:'📚',text:'RM has visited over 300 museums and galleries around the world. He\'s as much a philosopher as he is a rapper.'},
-  {icon:'☀️',text:'j-hope\'s stage name was chosen because he wanted to be the hope of BTS and ARMY — and he truly is. Every. Single. Day.'},
+  {icon:'☀️',text:'j-hope\'s stage name was chosen because he wanted to be the hope of BTS and ARMY — and he truly is. Every. Single. Day.'}
 ];
 var fg=document.getElementById('factsGrid');
 facts.forEach(function(f,i){
@@ -600,7 +637,7 @@ facts.forEach(function(f,i){
 var io=new IntersectionObserver(function(entries){
   entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('show');});
 },{threshold:.1});
-document.querySelectorAll('.reveal,.m-card,.a-card,.q-card,.tl-item,.fact-card').forEach(function(el){io.observe(el);});
+document.querySelectorAll('.reveal,.m-card,.q-card,.tl-item,.fact-card').forEach(function(el){io.observe(el);});
 </script>
 </body>
 </html>
